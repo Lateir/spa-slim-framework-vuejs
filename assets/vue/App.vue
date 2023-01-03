@@ -33,6 +33,14 @@
           >
             <a class="nav-link">Add Movie</a>
           </router-link>
+          <router-link
+              class="nav-item"
+              tag="li"
+              to="/dashboard"
+              active-class="active"
+          >
+            <a class="nav-link">Dashboard</a>
+          </router-link>
         </ul>
       </div>
     </nav>

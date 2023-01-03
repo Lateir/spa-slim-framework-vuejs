@@ -2,6 +2,7 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 import MovieList from "../views/MovieList";
 import AddMovie from "../views/AddMovie";
+import Dashboard from "../views/Dashboard";
 
 Vue.use(VueRouter)
 
@@ -18,7 +19,11 @@ export default new VueRouter({
         },
         {
             path: "*",
-            redirect: "/movies"
+            redirect: "/dashboard"
+        },
+        {
+            path: "/dashboard",
+            component: Dashboard
         },
     ]
 })

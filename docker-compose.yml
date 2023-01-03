@@ -2,7 +2,7 @@ version: '3'
 
 services:
     apache:
-        container_name: spa_apache
+        container_name: apache
         build: .docker/apache
         ports:
             - 80:80
@@ -16,7 +16,7 @@ services:
             - internal
 
     php-fpm:
-        container_name: spa_php
+        container_name: php-fpm
         build:
             context: .docker/php-fpm
         volumes:
@@ -24,6 +24,22 @@ services:
             - .docker/data/logs/php:/var/log/php:delegated
         expose:
             - 9000
+        networks:
+            - internal
+
+    postgress:
+        container_name: postgres
+        image: postgres:latest
+        environment:
+            POSTGRES_DB: "dashboard"
+            POSTGRES_USER: "lateir"
+            POSTGRES_PASSWORD: "123"
+            PGDATA: "/var/lib/postgresql/data/pgdata"
+            volumes: ".:/var/lib/postgresql/data"
+            # - "../2. Init Database:/docker-entrypoint-initdb.d"
+            
+        expose:
+            - 5432
         networks:
             - internal
 

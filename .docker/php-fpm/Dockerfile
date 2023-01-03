@@ -1,4 +1,4 @@
-FROM php:7.3.10-fpm
+FROM php:8.2-fpm
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends vim curl debconf subversion git apt-transport-https apt-utils \
@@ -6,7 +6,7 @@ RUN apt-get update \
     gnupg gnupg1 gnupg2 libicu-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     nodejs npm
 
-RUN docker-php-ext-configure zip --with-libzip
+RUN docker-php-ext-configure zip
 RUN docker-php-ext-install pdo pdo_mysql zip
 
 RUN docker-php-ext-configure intl
@@ -14,15 +14,15 @@ RUN docker-php-ext-install intl
 
 RUN pecl install pcov && docker-php-ext-enable pcov
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+# RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install gd
 
 COPY php.ini /usr/local/etc/php/php.ini
-COPY php-fpm-pool.conf /etc/php/7.3.10/pool.d/www.conf
+COPY php-fpm-pool.conf /etc/php/8.2/pool.d/www.conf
 
 # Composer
 
-RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
+RUN curl -sSk https://getcomposer.org/installer | php --  && \
    mv composer.phar /usr/local/bin/composer
 
 # Vue.js
